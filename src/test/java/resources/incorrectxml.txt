@@ -1,0 +1,17 @@
+<?xml veasdfasdfadrsion="1.0" encoding="UTF-8"?>
+<receipats>
+ <receipt>
+  <date>
+   <normalizedValue>2011-04-30</normalizedValue>
+   <recoadsfgnizedValue>
+    <text>04/30/2011</text>
+   </recognizedValue>
+  </date>asdf
+  <total>
+   <normalizedValue>54.26</normalizedValue>
+   <recogasdfnizedValue>
+    <text>$54.26</text>
+   </recognizedValue>
+  </total>
+ </receiptadfasdf>
+</receipts>asdfasf

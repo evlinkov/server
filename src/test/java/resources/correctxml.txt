@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<receipts>
+ <receipt>
+  <date>
+   <normalizedValue>2011-04-30</normalizedValue>
+   <recognizedValue>
+    <text>04/30/2011</text>
+   </recognizedValue>
+  </date>
+  <total>
+   <normalizedValue>54.26</normalizedValue>
+   <recognizedValue>
+    <text>$54.26</text>
+   </recognizedValue>
+  </total>
+ </receipt>
+</receipts>
