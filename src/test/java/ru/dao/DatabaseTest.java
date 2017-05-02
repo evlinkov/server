@@ -41,110 +41,42 @@ public class DatabaseTest {
         assertEquals(categoryDaoImpl.getAllCategories().size(), 4);
     }
 
-    /*@Test
+    @Test
     @Ignore
     public void testTableProduct() {
-        DatabaseConfig databaseConfig = new DatabaseConfig();
-        DataBaseImpl dataBaseImpl = new DataBaseImpl(databaseConfig);
-        assertEquals(dataBaseImpl.getAllProducts().size(), 4);
-        assertEquals(dataBaseImpl.getProductByNameProduct("audi").get(0).getCategoryId().toString(), "2");
-        assertEquals(dataBaseImpl.getProductByNameProduct("biscuit").get(0).getCategoryId().toString(), "3");
-        assertEquals(dataBaseImpl.getProductByNameProduct("cola").get(0).getCategoryId().toString(), "1");
-        assertEquals(dataBaseImpl.getProductByNameProduct("fanta").get(0).getCategoryId().toString(), "1");
-        assertEquals(dataBaseImpl.getProductByNameProduct("sprite").size(), 0);
-        TableProduct tableProduct = new TableProduct("sprite", 4);
-        dataBaseImpl.insertProduct(tableProduct);
-        assertEquals(dataBaseImpl.getAllProducts().size(), 5);
-        assertEquals(dataBaseImpl.getProductByNameProduct("sprite").get(0).getCategoryId().toString(), "4");
-        tableProduct.setCategoryId(3);
-        dataBaseImpl.updateProduct(tableProduct);
-        assertEquals(dataBaseImpl.getAllProducts().size(), 5);
-        assertEquals(dataBaseImpl.getProductByNameProduct("sprite").get(0).getCategoryId().toString(), "3");
-        dataBaseImpl.deleteProduct("sprite");
-        assertEquals(dataBaseImpl.getAllCategories().size(), 4);
+
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+        driverManagerDataSource.setUsername("root");
+        driverManagerDataSource.setPassword("rfhvf123");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/categories?useSSL=false");
+        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+
+        ProductDaoImpl productDaoImpl = new ProductDaoImpl(new JdbcTemplate(driverManagerDataSource));
+        assertEquals(productDaoImpl.getAllProducts().size(), 4);
+        assertEquals(productDaoImpl.getProductByName("fanta").getId().toString(), "1");
+        assertEquals(productDaoImpl.getProductByName("sprite").getCost().toString(), "12.3");
+        assertEquals(productDaoImpl.getProductByName("strawberry").getCost().toString(), "11.1");
+        assertEquals(productDaoImpl.getProductByName("audi").getCategoryId().toString(), "2");
+        assertEquals(productDaoImpl.getProductByName("cola"), null);
+        Product product = new Product();
+        product.setId(5);
+        product.setName("cola");
+        product.setCost(13.37);
+        product.setCategoryId(2);
+        productDaoImpl.insertProduct(product);
+        assertEquals(productDaoImpl.getAllProducts().size(), 5);
+        assertEquals(productDaoImpl.getProductByName("cola").getCost().toString(), "13.37");
+        product.setCost(10.00);
+        productDaoImpl.updateProduct(product);
+        assertEquals(productDaoImpl.getAllProducts().size(), 5);
+        assertEquals(productDaoImpl.getProductByName("cola").getCost().toString(), "10.0");
+        productDaoImpl.deleteProduct("cola");
+        assertEquals(productDaoImpl.getAllProducts().size(), 4);
+
+        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("fanta")), "1");
+        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("sprite")), "1");
+        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("strawberry")), "3");
+        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("audi")), "2");
     }
-
-    @Test
-    @Ignore
-    public void testGetCategories() {
-        List<Receipt> receiptList = new ArrayList<Receipt>();
-
-        List<Item> items1 = new ArrayList<Item>();
-        Item audi = new Item(new Name("audi"));
-        Item cola = new Item(new Name("cola"));
-        items1.add(audi);
-        items1.add(cola);
-        RecognizedItems recognizedItems1 = new RecognizedItems(items1);
-        Receipt receipt1 = new Receipt(recognizedItems1);
-        receiptList.add(receipt1);
-
-        List<Item> items2 = new ArrayList<Item>();
-        Item sprite = new Item(new Name("sprite"));
-        Item fanta = new Item(new Name("fanta"));
-        Item biscuit = new Item(new Name("biscuit"));
-        items2.add(sprite);
-        items2.add(fanta);
-        items2.add(biscuit);
-        RecognizedItems recognizedItems2 = new RecognizedItems(items2);
-        Receipt receipt2 = new Receipt(recognizedItems2);
-        receiptList.add(receipt2);
-
-        Receipts receipts = new Receipts(receiptList);
-
-        DatabaseConfig databaseConfig = new DatabaseConfig();
-        DataBaseImpl dataBaseImpl = new DataBaseImpl(databaseConfig);
-
-        System.out.println(dataBaseImpl.getCategories(receipts));
-    }
-
-    private void addProducts(DataBaseImpl dataBaseImpl) {
-        TableProduct tableProduct = new TableProduct();
-        for (int i = 1; i <= 500000; ++i) {
-            tableProduct.setNameProduct("name" + i);
-            tableProduct.setCategoryId(i);
-            dataBaseImpl.insertProduct(tableProduct);
-        }
-        System.out.println(dataBaseImpl.getAllProducts().size());
-    }
-
-    private void deleteProducts(DataBaseImpl dataBaseImpl) {
-        for (int i = 1; i <= 11111; ++i) {
-            dataBaseImpl.deleteProduct("name" + i);
-        }
-        System.out.println(dataBaseImpl.getAllProducts().size());
-    }
-
-    @Test
-    @Ignore
-    public void testTimeSequential() {
-        DatabaseConfig databaseConfig = new DatabaseConfig();
-        DataBaseImpl dataBaseImpl = new DataBaseImpl(databaseConfig);
-        addProducts(dataBaseImpl);
-        logger.info("start");
-        for (int i = 1; i <= 10000; ++i) {
-            TableProduct tableProduct = dataBaseImpl.getObjectProductByNameProduct("name" + i);
-            assertEquals(tableProduct.getCategoryId().toString(), String.valueOf(i));
-        }
-        logger.info("end");
-        deleteProducts(dataBaseImpl);
-    }
-
-    @Test
-    @Ignore
-    public void testTimeParallel() {
-        DatabaseConfig databaseConfig = new DatabaseConfig();
-        DataBaseImpl dataBaseImpl = new DataBaseImpl(databaseConfig);
-        addProducts(dataBaseImpl);
-        List<String> names = new ArrayList<String>();
-        for (int i = 1; i <= 10000; ++i) {
-            names.add("name" + i);
-        }
-        logger.info("start");
-        List<TableProduct> products = names.parallelStream().map(nameProduct -> dataBaseImpl.getObjectProductByNameProduct(nameProduct))
-                                           .collect(Collectors.toList());
-        System.out.println(products.size());
-        logger.info("end");
-        deleteProducts(dataBaseImpl);
-    }*/
 
 }

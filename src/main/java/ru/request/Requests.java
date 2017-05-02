@@ -17,8 +17,6 @@ public class Requests {
     @GET
     @Path("/{data}")
     public Response test() {
-        System.out.println(receiptService.getCategoryDao().getAllCategories().size());
-        System.out.println(receiptService.getProductDao().getAllProducts().size());
         return Response.ok("all is ok").build();
     }
 

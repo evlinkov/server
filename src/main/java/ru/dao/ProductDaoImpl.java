@@ -15,6 +15,7 @@ public class ProductDaoImpl implements ProductDao {
     DataBaseConfig dataBase;
 
     private JdbcTemplate jdbcTemplate;
+    private final int DEFAULT_CATEGORY_ID = 0;
 
     public ProductDaoImpl() { }
 
@@ -84,10 +85,23 @@ public class ProductDaoImpl implements ProductDao {
         return products.isEmpty() ? null : products.get(0);
     }
 
-
     @Override
     public List<Product> getAllProducts() {
         String sql = "SELECT * FROM product";
         return jdbcTemplate.query(sql, rowMapperProduct);
     }
+
+    @Override
+    public int getCategoryIdByName(String name) {
+
+        for (String nameProduct: name.split(" ")) {
+            String sql = "SELECT * FROM product WHERE name LIKE ?";
+            List<Product> products = jdbcTemplate.query(sql, rowMapperProduct, '%' + nameProduct + '%');
+            if (products.size() == 1 && !products.isEmpty()) {
+                return products.get(0).getCategoryId();
+            }
+        }
+        return DEFAULT_CATEGORY_ID;
+    }
+
 }
