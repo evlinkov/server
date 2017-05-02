@@ -11,7 +11,7 @@ import java.net.URL;
 
 public class ServerTest {
 
-    private static final String IP = "localhost";
+    /*private static final String IP = "localhost";
     private static final String PORT = "5555";
 
     @Test
@@ -39,6 +39,6 @@ public class ServerTest {
         }
         System.out.println(data);
 
-    }
+    }*/
 
 }

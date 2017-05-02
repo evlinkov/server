@@ -1,36 +1,39 @@
 package ru.request;
 
 import javax.ws.rs.GET;
+import ru.model.Receipt;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Response;
-import java.io.InputStream;
 
 @Path("")
 public class Requests {
 
-    private RequestDao requestDao;
+    @Inject
+    ReceiptService receiptService;
 
     @GET
-    @Path("/test")
+    @Path("/{data}")
     public Response test() {
+        System.out.println(receiptService.getCategoryDao().getAllCategories().size());
+        System.out.println(receiptService.getProductDao().getAllProducts().size());
         return Response.ok("all is ok").build();
     }
 
     @POST
     @Path(value = "/getCategories")
-    public Response getCategories(InputStream inputStream) {
+    @Consumes("application/xml")
+    public Response getCategories(Receipt receipt) {
         try {
-            String data = requestDao.getCategories(inputStream);
-            return Response.ok(data).build();
+            //String data = requestDao.getCategories(inputStream);
+            //return Response.ok(data).build();
+            return null;
         }
         catch (Exception error) {
             return Response.status(500).build();
         }
-    }
-
-    public Requests() {
-        requestDao = new RequestRealisation();
     }
 
 }

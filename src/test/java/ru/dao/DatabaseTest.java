@@ -1,45 +1,47 @@
-package ru.database;
+package ru.dao;
 
 import org.junit.Test;
 import org.junit.Ignore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.xmlparser.*;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
+import ru.entities.Product;
+import ru.entities.Category;
 import static org.junit.Assert.assertEquals;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class DatabaseTest {
-
-    private static final Logger logger = LoggerFactory.getLogger(DatabaseTest.class);
 
     @Test
     @Ignore
     public void testTableCategory() {
-        DatabaseConfig databaseConfig = new DatabaseConfig();
-        DataBaseImpl dataBaseImpl = new DataBaseImpl(databaseConfig);
-        assertEquals(dataBaseImpl.getAllCategories().size(), 4);
-        assertEquals(dataBaseImpl.getCategoryById(0).get(0).getNameCategory(), "other");
-        assertEquals(dataBaseImpl.getCategoryById(1).get(0).getNameCategory(), "drink");
-        assertEquals(dataBaseImpl.getCategoryById(2).get(0).getNameCategory(), "car");
-        assertEquals(dataBaseImpl.getCategoryById(3).get(0).getNameCategory(), "eat");
-        assertEquals(dataBaseImpl.getCategoryById(4).size(), 0);
-        TableCategory tableCategory = new TableCategory(4, "test");
-        dataBaseImpl.insertCategory(tableCategory);
-        assertEquals(dataBaseImpl.getAllCategories().size(), 5);
-        assertEquals(dataBaseImpl.getCategoryById(4).get(0).getNameCategory(), "test");
-        tableCategory.setNameCategory("testAfterUpdate");
-        dataBaseImpl.updateCategory(tableCategory);
-        assertEquals(dataBaseImpl.getAllCategories().size(), 5);
-        assertEquals(dataBaseImpl.getCategoryById(4).get(0).getNameCategory(), "testAfterUpdate");
-        dataBaseImpl.deleteCategory(4);
-        assertEquals(dataBaseImpl.getAllCategories().size(), 4);
+
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+        driverManagerDataSource.setUsername("root");
+        driverManagerDataSource.setPassword("rfhvf123");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/categories?useSSL=false");
+        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+
+        CategoryDaoImpl categoryDaoImpl = new CategoryDaoImpl(new JdbcTemplate(driverManagerDataSource));
+        assertEquals(categoryDaoImpl.getAllCategories().size(), 4);
+        assertEquals(categoryDaoImpl.getCategoryById(0).getName(), "other");
+        assertEquals(categoryDaoImpl.getCategoryById(1).getName(), "drink");
+        assertEquals(categoryDaoImpl.getCategoryById(2).getName(), "car");
+        assertEquals(categoryDaoImpl.getCategoryById(3).getName(), "eat");
+        assertEquals(categoryDaoImpl.getCategoryById(4), null);
+        Category category = new Category();
+        category.setId(4);
+        category.setName("test");
+        categoryDaoImpl.insertCategory(category);
+        assertEquals(categoryDaoImpl.getAllCategories().size(), 5);
+        assertEquals(categoryDaoImpl.getCategoryById(4).getName(), "test");
+        category.setName("testAfterUpdate");
+        categoryDaoImpl.updateCategory(category);
+        assertEquals(categoryDaoImpl.getAllCategories().size(), 5);
+        assertEquals(categoryDaoImpl.getCategoryById(4).getName(), "testAfterUpdate");
+        categoryDaoImpl.deleteCategory(4);
+        assertEquals(categoryDaoImpl.getAllCategories().size(), 4);
     }
 
-    @Test
+    /*@Test
     @Ignore
     public void testTableProduct() {
         DatabaseConfig databaseConfig = new DatabaseConfig();
@@ -143,6 +145,6 @@ public class DatabaseTest {
         System.out.println(products.size());
         logger.info("end");
         deleteProducts(dataBaseImpl);
-    }
+    }*/
 
 }

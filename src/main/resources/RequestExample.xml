@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<receipt>
+    <vendor>ACADIA</vendor>
+    <total>137.86</total>
+    <products>
+        <product>
+            <name>fanta</name>
+            <amount>3</amount>
+            <price>22.22</price>
+            <category></category>
+        </product>
+        <product>
+            <name>sprite</name>
+            <amount>4</amount>
+            <price>13.37</price>
+            <category></category>
+        </product>
+    </products>
+</receipt>
