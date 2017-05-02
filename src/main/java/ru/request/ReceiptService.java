@@ -1,12 +1,9 @@
 package ru.request;
 
-import ru.dao.ProductDao;
-import ru.dao.CategoryDao;
+import ru.model.Receipt;
 
 public interface ReceiptService {
 
-    //String getCategories(InputStream inputStream) throws Exception;
-    CategoryDao getCategoryDao();
-    ProductDao getProductDao();
+    void getCategories(Receipt receipt) throws Exception;
 
 }

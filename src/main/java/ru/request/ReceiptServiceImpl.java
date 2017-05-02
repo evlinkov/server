@@ -1,10 +1,10 @@
 package ru.request;
 
+import ru.model.Receipt;
 import ru.dao.ProductDao;
 import ru.dao.CategoryDao;
-import ru.entities.Category;
-
 import javax.inject.Inject;
+import ru.model.RequestProduct;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -17,20 +17,24 @@ public class ReceiptServiceImpl implements ReceiptService {
     @Inject
     CategoryDao categoryDao;
 
-    /*@Override
-    public String getCategories(InputStream inputStream) throws Exception {
-        Receipts receipts = new ObjectCreator().getReceipts(inputStream);
-        return dataBaseImpl.getCategories(receipts);
-    }*/
+    private int getCategoryId(String productName) {
+        return productDao.getCategoryIdByName(productName);
+    }
 
-    @Override
-    public CategoryDao getCategoryDao() {
-        return categoryDao;
+    private String getCategoryName(int id) {
+        return categoryDao.getCategoryById(id).getName();
+    }
+
+    private String getCategoryName(String productName) {
+        int id = getCategoryId(productName);
+        return getCategoryName(id);
     }
 
     @Override
-    public ProductDao getProductDao() {
-        return productDao;
+    public void getCategories(Receipt receipt) throws Exception {
+        for (RequestProduct product : receipt.getProducts()) {
+            product.setCategory(getCategoryName(product.getName()));
+        }
     }
 
 }

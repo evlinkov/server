@@ -6,6 +6,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("")
@@ -25,12 +26,16 @@ public class Requests {
     @Consumes("application/xml")
     public Response getCategories(Receipt receipt) {
         try {
-            //String data = requestDao.getCategories(inputStream);
-            //return Response.ok(data).build();
-            return null;
+            receiptService.getCategories(receipt);
+            return Response
+                    .ok(receipt)
+                    .type(MediaType.APPLICATION_XML_TYPE)
+                    .build();
         }
         catch (Exception error) {
-            return Response.status(500).build();
+            return Response
+                    .status(500)
+                    .build();
         }
     }
 
