@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="receipt" type="receiptType"/>
+  <xs:complexType name="receiptType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="vendor"/>
+      <xs:element type="xs:string" name="total"/>
+      <xs:element type="productsType" name="products"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productsType">
+    <xs:sequence>
+      <xs:element type="productType" name="product" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productType">
+    <xs:sequence>
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="fanta"/>
+            <xs:enumeration value="sprite"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="amount">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="price">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="22.22"/>
+            <xs:enumeration value="13.37"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="category"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
