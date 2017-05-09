@@ -31,9 +31,7 @@ public class Requests {
     public Response getCategories(Receipt receipt) {
         logger.info("поступил запрос на категоризацию");
         try {
-            System.out.println(receipt.getProducts().size());
             receiptService.getCategories(receipt);
-            System.out.println(receipt.getProducts().size());
             return Response
                     .ok(receipt)
                     .type(MediaType.APPLICATION_XML_TYPE)
