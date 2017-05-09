@@ -4,6 +4,6 @@ import ru.model.Receipt;
 
 public interface ReceiptService {
 
-    void getCategories(Receipt receipt) throws Exception;
+    void getCategories(Receipt receipt);
 
 }

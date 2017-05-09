@@ -30,18 +30,11 @@ public class Requests {
     @Consumes("application/xml")
     public Response getCategories(Receipt receipt) {
         logger.info("поступил запрос на категоризацию");
-        try {
-            receiptService.getCategories(receipt);
-            return Response
-                    .ok(receipt)
-                    .type(MediaType.APPLICATION_XML_TYPE)
-                    .build();
-        }
-        catch (Exception error) {
-            return Response
-                    .status(500)
-                    .build();
-        }
+        receiptService.getCategories(receipt);
+        return Response
+                .ok(receipt)
+                .type(MediaType.APPLICATION_XML_TYPE)
+                .build();
     }
 
 }

@@ -31,7 +31,7 @@ public class ReceiptServiceImpl implements ReceiptService {
     }
 
     @Override
-    public void getCategories(Receipt receipt) throws Exception {
+    public void getCategories(Receipt receipt) {
         for (RequestProduct product : receipt.getProducts()) {
             product.setCategory(getCategoryName(product.getName()));
         }
