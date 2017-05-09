@@ -5,7 +5,7 @@ import javax.annotation.ManagedBean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @ManagedBean
-public class DataBaseImpl implements DataBaseConfig {
+public class DataBaseConfigImpl implements DataBaseConfig {
 
     private final String USERNAME = "root";
     private final String PASSWORD = "rfhvf123";
