@@ -2,9 +2,11 @@ package ru.dao;
 
 import javax.sql.DataSource;
 import javax.annotation.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @ManagedBean
+@ApplicationScoped
 public class DataBaseConfigImpl implements DataBaseConfig {
 
     private final String USERNAME = "root";
