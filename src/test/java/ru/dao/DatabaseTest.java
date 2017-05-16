@@ -72,11 +72,6 @@ public class DatabaseTest {
         assertEquals(productDaoImpl.getProductByName("cola").getCost().toString(), "10.0");
         productDaoImpl.deleteProduct("cola");
         assertEquals(productDaoImpl.getAllProducts().size(), 4);
-
-        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("fanta")), "1");
-        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("sprite")), "1");
-        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("strawberry")), "3");
-        assertEquals(String.valueOf(productDaoImpl.getCategoryIdByName("audi")), "2");
     }
 
 }

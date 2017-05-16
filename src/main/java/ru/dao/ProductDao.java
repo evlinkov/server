@@ -15,12 +15,10 @@ public interface ProductDao {
 
     Product getProductByName(String name);
 
-    Product getProductByid(Integer id);
+    Product getProductById(Integer id);
 
     List<Product> getAllProducts();
 
     List<Product> getProductsByName(String name);
-
-    int getCategoryIdByName(String name);
 
 }

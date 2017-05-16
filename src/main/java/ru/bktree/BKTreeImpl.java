@@ -1,6 +1,7 @@
 package ru.bktree;
 
 import java.util.List;
+import java.util.HashSet;
 import ru.dao.ProductDao;
 import java.util.HashMap;
 import ru.entities.Product;
@@ -21,23 +22,30 @@ public class BKTreeImpl implements BKTree  {
 
 	private Node root;
 	private String bestTerm;
+	private HashSet<String> words; // добавляли ли мы уже такое слово в дерево
     private HashMap<String, Integer> matches;
 
     public BKTreeImpl() { }
 
-	@PostConstruct
-    public void initialization() {
-	    root = null;
-	    List<Product> products = productDao.getAllProducts();
-	    for (Product product : products) {
-	        String name = product.getName();
-	        add(name);
-        }
-    }
-
-	public BKTreeImpl(Distance distance) {
+	public BKTreeImpl(Distance distance, ProductDao productDao) {
 		root = null;
 		this.distance = distance;
+		this.productDao = productDao;
+	}
+
+	@PostConstruct
+	public void initialization() {
+		root = null;
+		words = new HashSet<>();
+		List<Product> products = productDao.getAllProducts();
+		for (Product product : products) {
+			for (String name : product.getName().split(" ")) {
+				if (!words.contains(name)) {
+					add(name);
+					words.add(name);
+				}
+			}
+		}
 	}
 
 	public void add(String term) {

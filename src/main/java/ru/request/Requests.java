@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import org.slf4j.LoggerFactory;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
+import ru.categorization.Categorization;
 
 @Path("")
 public class Requests {
@@ -17,7 +18,7 @@ public class Requests {
     private static final Logger logger = LoggerFactory.getLogger(Requests.class);
 
     @Inject
-    ReceiptService receiptService;
+    Categorization categorization;
 
     @GET
     @Path("/{data}")
@@ -30,7 +31,7 @@ public class Requests {
     @Consumes("application/xml")
     public Response getCategories(Receipt receipt) {
         logger.info("поступил запрос на категоризацию");
-        receiptService.getCategories(receipt);
+        categorization.categorize(receipt);
         return Response
                 .ok(receipt)
                 .type(MediaType.APPLICATION_XML_TYPE)

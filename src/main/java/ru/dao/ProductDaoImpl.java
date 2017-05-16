@@ -40,7 +40,6 @@ public class ProductDaoImpl implements ProductDao {
         }
     };
 
-
     @Override
     public void insertProduct(Product product) {
         String sql = "INSERT INTO product (id, name, cost, category_id) VALUES (?, ?, ?, ?)";
@@ -76,7 +75,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Product getProductByid(Integer id) {
+    public Product getProductById(Integer id) {
         String sql = "SELECT * FROM product WHERE id=?";
         List<Product> products = jdbcTemplate.query(sql, rowMapperProduct, id);
         if (products.size() > 1) {
@@ -95,19 +94,6 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> getProductsByName(String name) {
         String sql = "SELECT * FROM product WHERE name LIKE ?";
         return jdbcTemplate.query(sql, rowMapperProduct, '%' + name + '%');
-    }
-
-    @Override
-    public int getCategoryIdByName(String name) {
-
-        for (String nameProduct: name.split(" ")) {
-            String sql = "SELECT * FROM product WHERE name LIKE ?";
-            List<Product> products = jdbcTemplate.query(sql, rowMapperProduct, '%' + nameProduct + '%');
-            if (products.size() == 1 && !products.isEmpty()) {
-                return products.get(0).getCategoryId();
-            }
-        }
-        return DEFAULT_CATEGORY_ID;
     }
 
 }

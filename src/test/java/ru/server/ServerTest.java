@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class ServerTest {
 
     private static final String IP = "localhost";
-    private static final String PORT = "5555";
+    private static final String PORT = "1337";
 
     @Test
     @Ignore
