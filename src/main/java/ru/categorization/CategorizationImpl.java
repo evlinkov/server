@@ -2,8 +2,6 @@ package ru.categorization;
 
 import java.util.List;
 import ru.bktree.BKTree;
-import java.util.HashMap;
-import java.util.HashSet;
 import ru.dao.ProductDao;
 import ru.dao.CategoryDao;
 import ru.entities.Product;
@@ -11,7 +9,6 @@ import ru.entities.Product;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.annotation.PostConstruct;
 
 import ru.model.Receipt;
 import ru.model.RequestProduct;
@@ -48,27 +45,11 @@ public class CategorizationImpl implements Categorization {
 
     }
 
-    private HashMap<String, List<Double> > cache;
-
     public CategorizationImpl(Weight weight, BKTree bkTree, ProductDao productDao, CategoryDao categoryDao) {
         this.weight = weight;
         this.bkTree = bkTree;
         this.productDao = productDao;
         this.categoryDao = categoryDao;
-    }
-
-    @PostConstruct
-    public void initialization() {
-        cache = new HashMap<>();
-        HashSet<String> words = new HashSet<>();
-        List<Product> products = productDao.getAllProducts();
-        for (Product product : products) {
-            for (String name : product.getName().split(" ")) {
-                if (name.length() > 0) {
-
-                }
-            }
-        }
     }
 
     private boolean digit(char symbol) {
