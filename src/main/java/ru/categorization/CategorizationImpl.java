@@ -30,7 +30,7 @@ public class CategorizationImpl implements Categorization {
     CategoryDao categoryDao;
 
     // минимальное значение, чтобы признать категорию подходящей
-    private final double MINIMUM_MATCH_QUALITY = 0.15;
+    private final double MINIMUM_MATCH_QUALITY = 0.1;
 
     // число категорий в базе данных
     private final int NUMBER_OF_CATEGORIES = 22;
@@ -141,7 +141,7 @@ public class CategorizationImpl implements Categorization {
         values = new double[NUMBER_OF_CATEGORIES];
         for (int i = 0; i < NUMBER_OF_CATEGORIES; ++i) {
             probabilities[i] = 1.0;
-            frequency[i] = 1;
+            frequency[i] = 0;
         }
         List<String> partsProductName = getWords(product.getName());
         for (String partProductName : partsProductName) {
