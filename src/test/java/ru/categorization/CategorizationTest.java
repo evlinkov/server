@@ -2,6 +2,7 @@ package ru.categorization;
 
 import org.junit.Test;
 import org.junit.Ignore;
+import org.slf4j.Logger;
 import ru.dao.ProductDao;
 import ru.dao.CategoryDao;
 import java.io.FileReader;
@@ -10,13 +11,15 @@ import ru.bktree.BKTreeImpl;
 import ru.dao.ProductDaoImpl;
 import ru.dao.CategoryDaoImpl;
 import java.io.BufferedReader;
+import org.slf4j.LoggerFactory;
 import ru.model.RequestProduct;
 import ru.distance.LevenshteinDistance;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-
 public class CategorizationTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(CategorizationTest.class);
 
     @Test
     @Ignore
@@ -35,13 +38,14 @@ public class CategorizationTest {
         BKTreeImpl bkTree = new BKTreeImpl(distance, productDao);
         bkTree.initialization();
 
-        System.out.println(bkTree.query("bottom", 0));
-
         Categorization categorization = new CategorizationImpl(weight, bkTree, productDao, categoryDao);
 
-        BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/food.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/products.txt"));
         String line;
+        int cnt = 0;
+        logger.info("start");
         while ((line = reader.readLine()) != null) {
+            cnt++;
             String names[] = line.split(", ");
             RequestProduct requestProduct = new RequestProduct();
             requestProduct.setName(names[0]);
@@ -49,9 +53,13 @@ public class CategorizationTest {
             requestProduct.setAmount(1);
             requestProduct.setCategory("");
             categorization.categorize(requestProduct);
-            System.out.println(requestProduct.getCategory());
+            if (!requestProduct.getCategory().equals("Groceries & Gourmet Food")) {
+                System.out.print(requestProduct.getName() + " - ");
+                System.out.println(requestProduct.getCategory());
+            }
         }
-
+        logger.info("end");
+        System.out.println(cnt);
         reader.close();
     }
 

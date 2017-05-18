@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class WeightImpl implements Weight  {
 
-    private final double EPS = 0.0001;
+    public static final double EPS = 0.00001;
 
     /*
      *

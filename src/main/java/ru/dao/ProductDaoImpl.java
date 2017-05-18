@@ -93,7 +93,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Product> getProductsByName(String name) {
         String sql = "SELECT * FROM product WHERE name LIKE ?";
-        return jdbcTemplate.query(sql, rowMapperProduct, '%' + name + '%');
+        return jdbcTemplate.query(sql, rowMapperProduct, "% " + name + " %");
     }
 
 }
